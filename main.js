@@ -188,8 +188,7 @@ blocks.forEach(function (blockName) {
             }
         };
 
-
-        let testTimeLine = function () {
+        function testTimeLine () {
 
             let testprompt1 = "Does the following figure belong on the left or the right? Press 'f' for left; 'j' for right.<br><div class='small'>Answer as quick as you can!</div><br><div class='test-image center-content'><img src='img/test_";
             let testprompt2 = ".png'></img></div>";
