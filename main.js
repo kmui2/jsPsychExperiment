@@ -112,7 +112,7 @@ let instructions = {
 timeline.push(instructions);
 let blocks = ['source', 'switch', 'transfer'];
 
-blocks.forEach(function (blockName) {
+_.map(blocks, (blockName) =>{
     questionNos = _.shuffle(_.range(5));
     for (let i = 0; i < questionNos.length; i++) {
 
