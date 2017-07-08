@@ -127,26 +127,25 @@ let instructions = {
 
 timeline.push(instructions);
 let blocks = ['source', 'switch', 'transfer'];
-let questionNos = Array.apply(null, Array(5)).map(function (_, i) { return i; });
 
 blocks.forEach(function (blockName) {
-    questionNos = _.shuffle(questionNos);
-    questionNos.forEach(function (questionNo, questionOrder) {
+    questionNos = _.shuffle(_.range(5));
+    for (let i = 0; i < 5; i++) {
 
         let explanation = {
             type: 'survey-text',
-            questions: ["<div class='block-center center-content'><img src='img/" + questionNo + "_" + blockName + ".png'></img></div>Give a rule describing the LEFT-side figures.", "Give a rule describing the RIGHT-side figures."],
+            questions: ["<div class='block-center center-content'><img src='img/" + questionNos[i] + "_" + blockName + ".png'></img></div>Give a rule describing the LEFT-side figures.", "Give a rule describing the RIGHT-side figures."],
             columns: [60, 60],
             data: {
-                questionNo: questionNo,
-                questionOrder: questionOrder,
+                questionNo: questionNos[i],
+                questionOrder: i,
                 version: blockName,
                 task: 'explain'
             },
             on_finish: function (trial_data) {
                 jsPsych.data.addDataToLastTrial({
-                    questionNo: questionNo,
-                    questionOrder: questionOrder,
+                    questionNo: questionNos[i],
+                    questionOrder: i,
                     version: blockName,
                     task: 'explain'
                 })
@@ -155,20 +154,20 @@ blocks.forEach(function (blockName) {
 
         let gotit = {
             type: 'single-stim',
-            stimulus: 'img/' + questionNo + '_' + blockName + '.png',
+            stimulus: 'img/' + questionNos[i] + '_' + blockName + '.png',
             choices: [' '],
             prompt: 'Hit SPACE when you have the answer.',
             timing_response: 120000,
             data: {
-                questionNo: questionNo,
-                questionOrder: questionOrder,
+                questionNo: questionNos[i],
+                questionOrder: i,
                 version: blockName,
                 task: 'gotit'
             },
             on_finish: function (trial_data) {
                 jsPsych.data.addDataToLastTrial({
-                    questionNo: questionNo,
-                    questionOrder: questionOrder,
+                    questionNo: questionNos[i],
+                    questionOrder: i,
                     version: blockName,
                     task: 'gotit'
                 })
@@ -199,11 +198,11 @@ blocks.forEach(function (blockName) {
             testNos = _.shuffle(testNos);
             testNos.forEach(function (testNo, testOrder) {
                 testArray.push({
-                    prompt: testprompt1 + questionNo + "_" + blockName + "_" + testNo + testprompt2,
-                    stimulus: 'img/' + questionNo + '_' + blockName + '.png',
+                    prompt: testprompt1 + questionNos[i] + "_" + blockName + "_" + testNo + testprompt2,
+                    stimulus: 'img/' + questionNos[i] + '_' + blockName + '.png',
                     data: {
-                        questionNo: questionNo,
-                        questionOrder: questionOrder,
+                        questionNo: questionNos[i],
+                        questionOrder: i,
                         version: blockName,
                         testNo: testNo,
                         testOrder: testOrder,
@@ -243,7 +242,7 @@ blocks.forEach(function (blockName) {
         timeline2.push(trial);
         //console.log("setup done")
 
-    })
+    }
 })
 
 
