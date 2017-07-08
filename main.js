@@ -2,20 +2,11 @@
 let timeline = [];
 let timeline2 = [];
 
-function makeid () {
-    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split('');
-    return _.shuffle(possible).slice(0,5).join('');
-};
-
-let participantID = makeid() + 'iTi' + makeid()
-function condition () {
-    // randomly chooses between intuitive and explicit
-    return ['intuitive','explicit'][_.random(0,1)];
-};
 
 let condition_string = 'explicit';//condition();
 let group = 'shuffled';
 let turkInfo = jsPsych.turk.turkInfo();
+let participantID = makeid() + 'iTi' + makeid()
 
 jsPsych.data.addProperties({
     subject: participantID,
@@ -25,13 +16,6 @@ jsPsych.data.addProperties({
     assginementId: turkInfo.assignmentId,
     hitId: turkInfo.assignmentId
 });
-function condition_instructions () {
-    if (condition_string == 'explicit') {
-        return "<p>You will then be asked to type in your descriptions, one for each side.</p>";
-    } else {
-        return "";
-    }
-};
 
 let continue_space = "<div class='right small'>(press SPACE to continue, or BACKSPACE to head back)</div>";
 
@@ -130,7 +114,7 @@ let blocks = ['source', 'switch', 'transfer'];
 
 blocks.forEach(function (blockName) {
     questionNos = _.shuffle(_.range(5));
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < questionNos.length; i++) {
 
         let explanation = {
             type: 'survey-text',
@@ -185,26 +169,29 @@ blocks.forEach(function (blockName) {
                 } else {
                     return false;
                 }
-            }
+            } 
         };
 
         function testTimeLine () {
 
-            let testprompt1 = "Does the following figure belong on the left or the right? Press 'f' for left; 'j' for right.<br><div class='small'>Answer as quick as you can!</div><br><div class='test-image center-content'><img src='img/test_";
+            let testprompt1 = `
+            Does the following figure belong on the left or the right? 
+            Press 'f' for left; 'j' for right.<br>
+            <div class='small'>Answer as quick as you can!</div><br>
+            <div class='test-image center-content'><img src='img/test_`;
             let testprompt2 = ".png'></img></div>";
             let testArray = [];
-            let testNos = Array.apply(null, Array(4)).map(function (_, i) { return i; });
-            testNos = _.shuffle(testNos);
-            testNos.forEach(function (testNo, testOrder) {
+            let testNos  = _.shuffle(_.range(4));
+            for (let i = 0; i < testNos.length; i++) {
                 testArray.push({
-                    prompt: testprompt1 + questionNos[i] + "_" + blockName + "_" + testNo + testprompt2,
+                    prompt: testprompt1 + questionNos[i] + "_" + blockName + "_" + testNos[i] + testprompt2,
                     stimulus: 'img/' + questionNos[i] + '_' + blockName + '.png',
                     data: {
                         questionNo: questionNos[i],
                         questionOrder: i,
                         version: blockName,
-                        testNo: testNo,
-                        testOrder: testOrder,
+                        testNo: testNos[i],
+                        testOrder: i,
                         task: 'test'
                     },
                     on_finish: function (trial_data) {
@@ -213,9 +200,9 @@ blocks.forEach(function (blockName) {
                         // var height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
                         // console.log(height);
                         let correct = 0;
-                        if (trial_data.key_press == 70 && testNo <= 1) { //f = 70, j = 74
+                        if (trial_data.key_press == 70 && testNos[i] <= 1) { //f = 70, j = 74
                             correct = 1;
-                        } else if (trial_data.key_press == 74 && testNo >= 2) {
+                        } else if (trial_data.key_press == 74 && testNos[i] >= 2) {
                             correct = 1;
                         };
                         jsPsych.data.addDataToLastTrial({
@@ -224,7 +211,7 @@ blocks.forEach(function (blockName) {
                     }
                     //add data
                 })
-            });
+            };
             return testArray;
         }
 
@@ -246,7 +233,7 @@ blocks.forEach(function (blockName) {
 
 
 let timelineShuffled = jsPsych.randomization.repeat(timeline2, 1);
-timelineShuffled.forEach(function (trial) {
+timelineShuffled.forEach((trial) => {
     timeline.push(trial)
 })
 
@@ -266,7 +253,6 @@ function saveData(filename, filedata) {
     });
 }
 
-//setupBlocks();
 
 jsPsych.init({
     default_iti: 0,
