@@ -12,14 +12,9 @@ var timeline2 = [];
 //     }
 // }
 
-var makeid = function () {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for (var i = 0; i < 5; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
+function makeid () {
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split('');
+    return _.shuffle(possible).slice(0,5).join('');
 };
 
 var participantID = makeid() + 'iTi' + makeid()
