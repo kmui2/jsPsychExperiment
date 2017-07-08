@@ -2,15 +2,15 @@
 var timeline = [];
 var timeline2 = [];
 
-var shuffle = function (a) {
-    var j, x, i;
-    for (i = a.length; i; i--) {
-        j = Math.floor(Math.random() * i);
-        x = a[i - 1];
-        a[i - 1] = a[j];
-        a[j] = x;
-    }
-}
+// var shuffle = function (a) {
+//     var j, x, i;
+//     for (i = a.length; i; i--) {
+//         j = Math.floor(Math.random() * i);
+//         x = a[i - 1];
+//         a[i - 1] = a[j];
+//         a[j] = x;
+//     }
+// }
 
 var makeid = function () {
     var text = "";
@@ -151,7 +151,7 @@ var blocks = ['source', 'switch', 'transfer'];
 var questionNos = Array.apply(null, Array(5)).map(function (_, i) { return i; });
 
 blocks.forEach(function (blockName) {
-    shuffle(questionNos);
+    questionNos = _.shuffle(questionNos);
     questionNos.forEach(function (questionNo, questionOrder) {
 
         var explanation = {
@@ -217,7 +217,7 @@ blocks.forEach(function (blockName) {
             var testprompt2 = ".png'></img></div>";
             var testArray = [];
             var testNos = Array.apply(null, Array(4)).map(function (_, i) { return i; });
-            shuffle(testNos);
+            testNos = _.shuffle(testNos);
             testNos.forEach(function (testNo, testOrder) {
                 testArray.push({
                     prompt: testprompt1 + questionNo + "_" + blockName + "_" + testNo + testprompt2,
