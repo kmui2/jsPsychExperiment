@@ -1,30 +1,16 @@
 
-var timeline = [];
-var timeline2 = [];
-
-// var shuffle = function (a) {
-//     var j, x, i;
-//     for (i = a.length; i; i--) {
-//         j = Math.floor(Math.random() * i);
-//         x = a[i - 1];
-//         a[i - 1] = a[j];
-//         a[j] = x;
-//     }
-// }
+let timeline = [];
+let timeline2 = [];
 
 function makeid () {
     let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split('');
     return _.shuffle(possible).slice(0,5).join('');
 };
 
-var participantID = makeid() + 'iTi' + makeid()
-var condition = function () {
-    var cnd = Math.random();
-    if (cnd < 0.5) {
-        return 'intuitive'
-    } else {
-        return 'explicit'
-    }
+let participantID = makeid() + 'iTi' + makeid()
+function condition () {
+    // randomly chooses between intuitive and explicit
+    return ['intuitive','explicit'][_.random(0,1)];
 };
 
 var condition_string = 'explicit';//condition();
