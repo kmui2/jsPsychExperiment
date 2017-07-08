@@ -39,7 +39,6 @@ let loop_node = {
         if (hght / availHght > 0.9 & hght > 740) {
             return false;
         } else {
-            //console.log("true");
             return true;
         }
     }
@@ -56,48 +55,48 @@ let instructions = {
     key_forward: ' ',
     key_backward: 8,
     pages: [
-    `<p>In this experiment, you will see a series of puzzles of varying difficulty.
+        `<p>In this experiment, you will see a series of puzzles of varying difficulty.
     Each puzzle consists of two sets of six figures, six on the left and six on the right, like the following:</p>
     <p>Each figure on the LEFT has something in common, something not shared with any figure on the right.
     Similarly, each figure on the RIGHT has something in common, something not shared with any figure on the left.
     Your job is to figure out how each side is different.</p>
     <div class='bongard-image'><img src='img/example1.png'></img></div>
     ${continue_space}`,
-    `<p>You might think that the answer is that the left-side has a yellow figure and the right-side does not, 
+        `<p>You might think that the answer is that the left-side has a yellow figure and the right-side does not, 
     but this is WRONG since it should apply to EVERY figure on the left-side 
     in a way that distinguishes it from EVERY figure on the right-side, and only one left-side figure is yellow.</p>
     <p>The correct description for the left-side is that they are all triangles since every left-side figure is a triangle, and no right-side figure is. 
     If you said '3 sides' that would also be acceptable.</p>
     <div class='bongard-image'><img src='img/example1.png'></img></div>
     ${continue_space}`,
-    `<p>You might think that an appropriate description for the right-side is that they're all dotted lines. 
+        `<p>You might think that an appropriate description for the right-side is that they're all dotted lines. 
     However, since one of the left-side figures also has dotted lines, this is WRONG. 
     The correct answer is that the right-side figures are all quadrilaterals. 
     If you said '4 sides' that would also be acceptable.
     <p>Take a moment to look over these descriptions, so you're sure how they apply to the puzzle.</p>
     <div class='bongard-image'><img src='img/example1.png'></img></div>
     ${continue_space}`,
-    `<p>We'll show you a couple of trials. Each time look carefully at the puzzle and try work out how to describe each side.</p>
+        `<p>We'll show you a couple of trials. Each time look carefully at the puzzle and try work out how to describe each side.</p>
     <p>When you think you've got the answer (i.e. a description of both the left- and the right-sides), just press SPACE.</p>
     <p> </p>
     <div class='bongard-image'><img src='img/example2.png'></img></div>
     ${continue_space}`,
-    `<p>The answer is that the left-side figures have at least one small shape; the right-side figures have no small shapes.</p>
+        `<p>The answer is that the left-side figures have at least one small shape; the right-side figures have no small shapes.</p>
     <p>When you've understood why that's correct, continue to the next example.</p>
     <p> </p>
     <div class='bongard-image'><img src='img/example2.png'></img></div>
     ${continue_space}`,
-    `<p>Look carefully at the puzzle and try work out how to describe each side.</p>
+        `<p>Look carefully at the puzzle and try work out how to describe each side.</p>
     <p>When you think you've got the answer (i.e. a description of both the left- and the right-sides), just press SPACE.</p>
     <p> </p>
     <div class='bongard-image'><img src='img/example3.png'></img></div>
     ${continue_space}`,
-    `<p>The answer is that the left-side lines cross themselves; the right-side lines do not.</p>
+        `<p>The answer is that the left-side lines cross themselves; the right-side lines do not.</p>
     <p>When you've understood why that's correct, press SPACE to for some final instructions.</p>
     <p> </p>
     <div class='bongard-image'><img src='img/example3.png'></img></div>
     ${continue_space}`,
-    `<p>Ok, let's begin the experiment. You'll be shown the puzzle and when you think you have the answer (a description for both the left- and right-sides), press SPACE.</p>
+        `<p>Ok, let's begin the experiment. You'll be shown the puzzle and when you think you have the answer (a description for both the left- and right-sides), press SPACE.</p>
     ${condition_instructions()}
     <p>Then we will give you 4 new figures (like the 6 figures that make up each side) and you will have to choose if they belong with the left- or the right-side. 
     Even if you haven't found the answer at this point, you can make a guess. Try answer these as quickly as possible</p>
@@ -110,9 +109,9 @@ let instructions = {
 
 
 timeline.push(instructions);
-let blocks = ['source', 'switch', 'transfer'];
 
-_.map(blocks, (blockName) =>{
+let blocks = ['source', 'switch', 'transfer'];
+_.map(blocks, (blockName) => {
     questionNos = _.shuffle(_.range(5));
     for (let i = 0; i < questionNos.length; i++) {
 
@@ -169,10 +168,10 @@ _.map(blocks, (blockName) =>{
                 } else {
                     return false;
                 }
-            } 
+            }
         };
 
-        function testTimeLine () {
+        function testTimeLine() {
 
             let testprompt1 = `
             Does the following figure belong on the left or the right? 
@@ -181,7 +180,7 @@ _.map(blocks, (blockName) =>{
             <div class='test-image center-content'><img src='img/test_`;
             let testprompt2 = ".png'></img></div>";
             let testArray = [];
-            let testNos  = _.shuffle(_.range(4));
+            let testNos = _.shuffle(_.range(4));
             for (let i = 0; i < testNos.length; i++) {
                 testArray.push({
                     prompt: testprompt1 + questionNos[i] + "_" + blockName + "_" + testNos[i] + testprompt2,
@@ -241,17 +240,6 @@ let endmessage = "Thank you for participating! Your completion code is " +
     participantID +
     ". Copy and paste this in MTurk to get paid. If you have any questions or comments, please email jsulik@wisc.edu."
 
-function saveData(filename, filedata) {
-    $.ajax({
-        type: 'post',
-        cache: false,
-        url: 'bongarddata.php', // this is the path to the above PHP script
-        data: {
-            filename: filename,
-            filedata: filedata
-        }
-    });
-}
 
 
 jsPsych.init({
