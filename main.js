@@ -111,7 +111,7 @@ let instructions = {
 timeline.push(instructions);
 
 let blocks = ['source', 'switch', 'transfer'];
-blocks.forEach((blockName) => {
+_.forEach(blocks, (blockName) => {
     let questionNos = _.shuffle(_.range(5));
     for (let i = 0; i < questionNos.length; i++) {
 
@@ -232,7 +232,7 @@ blocks.forEach((blockName) => {
 
 
 let timelineShuffled = jsPsych.randomization.repeat(timeline2, 1);
-timelineShuffled.forEach((trial) => {
+_.forEach(timelineShuffled, (trial) => {
     timeline.push(trial)
 })
 
